@@ -1,0 +1,37 @@
+# Longest Repeating Character Replacement
+
+# Leetcode link: https://leetcode.com/problems/longest-repeating-character-replacement/
+
+# Problem:
+# You are given a string s and an integer k. You can choose any character of the string and change it to any other uppercase English character. You can perform this operation at most k times.
+
+from typing import List
+
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        
+        max_length =0
+
+        max_freq =0
+        left = 0
+
+        char_count = {}
+        for right in range(len(s)):
+            char_count[s[right]] = char_count.get(s[right],0)+1
+
+            max_freq = max(max_freq, char_count[s[right]])
+
+            while(right-left+1) - max_freq >k:
+                char_count[s[left]] -= 1
+                left += 1
+
+            max_length = max(max_length, right - left + 1)
+
+        
+        return max_length
+    
+# Test the solution
+
+s = Solution()
+print(s.characterReplacement("ABAB", 2)) # 4
+print(s.characterReplacement("AABABBA", 1)) # 4
